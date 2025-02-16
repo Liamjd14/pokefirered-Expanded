@@ -351,7 +351,7 @@ void CB2_BagMenuFromStartMenu(void)
 
 void CB2_BagMenuFromBattle(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_BATTLE, OPEN_BAG_LAST, SetCB2ToReshowScreenAfterMenu2);
+    GoToBagMenu(ITEMMENULOCATION_BATTLE, OPEN_BAG_LAST, CB2_SetUpReshowBattleScreenAfterMenu2);
 }
 
 static void CB2_BagMenuRun(void)
@@ -669,11 +669,14 @@ static void Bag_BuildListMenuTemplate(u8 pocket)
 
 static void BagListMenuGetItemNameColored(u8 *dest, u16 itemId)
 {
+    u8* end;
     if (itemId == ITEM_TM_CASE || itemId == ITEM_BERRY_POUCH)
         StringCopy(dest, sListItemTextColor_TmCase_BerryPouch);
     else
         StringCopy(dest, sListItemTextColor_RegularItem);
-    StringAppend(dest, ItemId_GetName(itemId));
+    
+    end = StringAppend(dest, ItemId_GetName(itemId));
+    PrependFontIdToFit(dest, end, FONT_NARROW, 61);
 }
 
 static void BagListMenuMoveCursorFunc(s32 itemIndex, bool8 onInit, struct ListMenu *list)
@@ -949,7 +952,7 @@ void Bag_BeginCloseWin0Animation(void)
     gBagMenuState.bagOpen = FALSE;
 }
 
-void CB2_SetUpReshowBattleScreenAfterMenu(void)
+void SetBagOpenFalse(void)
 {
     gBagMenuState.bagOpen = FALSE;
 }
@@ -2101,7 +2104,7 @@ void InitOldManBag(void)
     BackUpPlayerBag();
     AddBagItem(ITEM_POTION, 1);
     AddBagItem(ITEM_POKE_BALL, 1);
-    GoToBagMenu(ITEMMENULOCATION_OLD_MAN, OPEN_BAG_ITEMS, SetCB2ToReshowScreenAfterMenu2);
+    GoToBagMenu(ITEMMENULOCATION_OLD_MAN, OPEN_BAG_ITEMS, CB2_SetUpReshowBattleScreenAfterMenu2);
 }
 
 #define tFrameCounter data[8]
@@ -2183,11 +2186,11 @@ void InitPokedudeBag(u8 a0)
         location = a0;
         break;
     case ITEMMENULOCATION_TTVSCR_STATUS:
-        cb2 = SetCB2ToReshowScreenAfterMenu2;
+        cb2 = CB2_SetUpReshowBattleScreenAfterMenu2;
         location = ITEMMENULOCATION_TTVSCR_STATUS;
         break;
     case ITEMMENULOCATION_TTVSCR_CATCHING:
-        cb2 = SetCB2ToReshowScreenAfterMenu2;
+        cb2 = CB2_SetUpReshowBattleScreenAfterMenu2;
         location = ITEMMENULOCATION_TTVSCR_CATCHING;
         break;
     }

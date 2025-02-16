@@ -76,8 +76,8 @@ extern const struct BlendSettings gTimeOfDayBlend[];
 
 extern struct PaletteFadeControl gPaletteFade;
 extern u32 gPlttBufferTransferPending;
-extern u16 gPlttBufferUnfaded[PLTT_BUFFER_SIZE];
-extern u16 gPlttBufferFaded[PLTT_BUFFER_SIZE];
+extern u16 ALIGNED(4) gPlttBufferUnfaded[PLTT_BUFFER_SIZE];
+extern u16 ALIGNED(4) gPlttBufferFaded[PLTT_BUFFER_SIZE];
 
 void LoadCompressedPalette(const u32 *src, u32 offset, u32 size);
 void LoadPalette(const void *src, u32 offset, u32 size);
@@ -89,6 +89,8 @@ bool32 BeginNormalPaletteFade(u32 selectedPalettes, s8 delay, u8 startY, u8 targ
 bool32 BeginTimeOfDayPaletteFade(u32, s8, u8, u8, struct BlendSettings *, struct BlendSettings *, u32, u32);
 void ResetPaletteFadeControl(void);
 void InvertPlttBuffer(u32 selectedPalettes);
+void TintPlttBuffer(u32 selectedPalettes, s8 r, s8 g, s8 b);
+void UnfadePlttBuffer(u32 selectedPalettes);
 void BeginFastPaletteFade(u32 submode);
 void BeginHardwarePaletteFade(u32 blendCnt, u32 delay, u32 y, u32 targetY, u32 shouldResetBlendRegisters);
 void BlendPalettes(u32 selectedPalettes, u8 coeff, u32 color);

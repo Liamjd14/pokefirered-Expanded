@@ -1,7 +1,7 @@
 #ifndef GUARD_SOUND_H
 #define GUARD_SOUND_H
 
-#include "global.h"
+#include "constants/sound.h"
 
 void InitMapMusic(void);
 void MapMusicMain(void);
@@ -29,6 +29,7 @@ void PlayCry_NormalNoDucking(u16 species, s8 pan, s8 volume, u8 priority);
 void PlayCry_ByMode(u16 species, s8 pan, u8 mode);
 void PlayCry_ReleaseDouble(u16 species, s8 pan, u8 mode);
 void PlayCry_Script(u16 species, u8 mode);
+void PlayCry_DuckNoRestore(u16 species, s8 pan, u8 mode);
 void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode);
 bool8 IsCryFinished(void);
 void StopCryAndClearCrySongs(void);

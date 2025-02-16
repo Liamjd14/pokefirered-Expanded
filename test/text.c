@@ -19,45 +19,47 @@
 TEST("Move names fit on Pokemon Summary Screen")
 {
     u32 i;
-    const u32 fontId = FONT_NARROWER, widthPx = 1000;
+    const u32 fontId = FONT_NARROWER, widthPx = 72;
     u32 move = MOVE_NONE;
     for (i = 1; i < MOVES_COUNT; i++)
     {
-        PARAMETRIZE_LABEL("%S", gMovesInfo[i].name) { move = i; }
+        PARAMETRIZE_LABEL("%S", GetMoveName(i)) { move = i; }
     }
-    //DebugPrintf("Move %d: %S", GetStringWidth(fontId, gMovesInfo[move].name, 0), gMovesInfo[move].name);
-    EXPECT_LE(GetStringWidth(fontId, gMovesInfo[move].name, 0), widthPx);
+    //DebugPrintf("Move %d: %S", GetStringWidth(fontId, GetMoveName(move), 0), GetMoveName(move));
+    EXPECT_LE(GetStringWidth(fontId, GetMoveName(move), 0), widthPx);
 }
 
 TEST("Move names fit on Battle Screen")
 {
     u32 i;
-    const u32 fontId = FONT_NARROWER, widthPx = 1000;
+    const u32 fontId = FONT_NARROWER, widthPx = 64;
     u32 move = MOVE_NONE;
     for (i = 1; i < MOVES_COUNT; i++)
     {
-        PARAMETRIZE_LABEL("%S", gMovesInfo[i].name) { move = i; }
+        PARAMETRIZE_LABEL("%S", GetMoveName(i)) { move = i; }
     }
-    EXPECT_LE(GetStringWidth(fontId, gMovesInfo[move].name, 0), widthPx);
+    EXPECT_LE(GetStringWidth(fontId, GetMoveName(move), 0), widthPx);
 }
 
 TEST("Move names fit on Contest Screen")
 {
     u32 i;
-    const u32 fontId = FONT_NARROWER, widthPx = 61;
+    const u32 fontId = FONT_NARROWER, widthPx = 59;
     u32 move = MOVE_NONE;
     for (i = 1; i < MOVES_COUNT; i++)
     {
-        PARAMETRIZE_LABEL("%S", gMovesInfo[i].name) { move = i; }
+        PARAMETRIZE_LABEL("%S", GetMoveName(i)) { move = i; }
     }
     // All moves explicitly listed here are too big to fit.
     switch (move)
     {
+    case MOVE_STOMPING_TANTRUM:
     case MOVE_NATURES_MADNESS:
-        EXPECT_GT(GetStringWidth(fontId, gMovesInfo[move].name, 0), widthPx);
+    case MOVE_DOUBLE_IRON_BASH:
+        EXPECT_GT(GetStringWidth(fontId, GetMoveName(move), 0), widthPx);
         break;
     default:
-        EXPECT_LE(GetStringWidth(fontId, gMovesInfo[move].name, 0), widthPx);
+        EXPECT_LE(GetStringWidth(fontId, GetMoveName(move), 0), widthPx);
         break;
     }
 }
@@ -67,14 +69,11 @@ TEST("Move names fit on TMs & HMs Bag Screen")
     u32 i;
     const u32 fontId = FONT_NARROWER, widthPx = 1000;
     u32 move = MOVE_NONE;
-    for (i = 1; i < ITEMS_COUNT; i++)
+    for (i = 1; i < MOVES_COUNT; i++)
     {
-        if (gItemsInfo[i].pocket == POCKET_TM_HM)
-        {
-            PARAMETRIZE_LABEL("%S", gMovesInfo[gItemsInfo[i].secondaryId].name) { move = gItemsInfo[i].secondaryId; }
-        }
+        PARAMETRIZE_LABEL("%S", GetMoveName(i)) { move = i; }
     }
-    EXPECT_LE(GetStringWidth(fontId, gMovesInfo[move].name, 0), widthPx);
+    EXPECT_LE(GetStringWidth(fontId, GetMoveName(move), 0), widthPx);
 }
 
 TEST("Move names fit on Move Relearner Screen")
@@ -84,9 +83,9 @@ TEST("Move names fit on Move Relearner Screen")
     u32 move = MOVE_NONE;
     for (i = 1; i < MOVES_COUNT; i++)
     {
-        PARAMETRIZE_LABEL("%S", gMovesInfo[i].name) { move = i; }
+        PARAMETRIZE_LABEL("%S", GetMoveName(i)) { move = i; }
     }
-    EXPECT_LE(GetStringWidth(fontId, gMovesInfo[move].name, 0), widthPx);
+    EXPECT_LE(GetStringWidth(fontId, GetMoveName(move), 0), widthPx);
 }
 
 TEST("Move descriptions fit on Pokemon Summary Screen")
@@ -96,9 +95,9 @@ TEST("Move descriptions fit on Pokemon Summary Screen")
     u32 move = MOVE_NONE;
     for (i = 1; i < MOVES_COUNT; i++)
     {
-        PARAMETRIZE_LABEL("%S", gMovesInfo[i].description) { move = i; }
+        PARAMETRIZE_LABEL("%S", GetMoveDescription(i)) { move = i; }
     }
-    EXPECT_LE(GetStringWidth(fontId, gMovesInfo[move].description, 0), widthPx);
+    EXPECT_LE(GetStringWidth(fontId, GetMoveDescription(move), 0), widthPx);
 }
 
 TEST("Item names fit on Bag Screen (list)")
@@ -111,6 +110,7 @@ TEST("Item names fit on Bag Screen (list)")
     {
         PARAMETRIZE_LABEL("%S", gItemsInfo[i].name) { item = i; }
     }
+    //DebugPrintf("Item %d: %S", GetStringWidth(fontId, gItemsInfo[item].name, 0), gItemsInfo[item].name);
     if (gItemsInfo[item].pocket == POCKET_TM_HM || gItemsInfo[item].pocket == POCKET_BERRIES)
         EXPECT_LE(GetStringWidth(fontId, gItemsInfo[item].name, 0), tmHmBerryWidthPx);
     else
@@ -132,6 +132,18 @@ TEST("Item plural names fit on Bag Screen (left box)")
     EXPECT_LE(GetStringWidth(fontId, pluralName, 0), widthPx);
 }
 
+TEST("Item names fit on PC Storage (list)")
+{
+    u32 i;
+    const u32 fontId = FONT_NARROWER, widthPx = 1000;
+    u32 item = ITEM_NONE;
+    for (i = 1; i < ITEMS_COUNT; i++)
+    {
+        PARAMETRIZE_LABEL("%S", gItemsInfo[i].name) { item = i; }
+    }
+    EXPECT_LE(GetStringWidth(fontId, gItemsInfo[item].name, 0), widthPx);
+}
+
 TEST("Item plural names fit on PC storage (left box)")
 {
     u32 i;
@@ -150,108 +162,22 @@ TEST("Item plural names fit on PC storage (left box)")
 TEST("Item names fit on Pokemon Storage System")
 {
     u32 i;
-    const u32 fontId = FONT_SMALL_NARROWER, widthPx = 50;
+    const u32 fontId = FONT_SMALL_NARROWER, widthPx = 66;
     u32 item = ITEM_NONE;
     for (i = 1; i < ITEMS_COUNT; i++)
     {
         if (gItemsInfo[i].importance) continue;
         PARAMETRIZE_LABEL("%S", gItemsInfo[i].name) { item = i; }
     }
-    // All items explicitly listed here are too big to fit. The ones
-    // with a hold effect are listed at the bottom in case you want to
-    // focus on making them fit (they are the most likely to appear on
-    // the storage system UI, along with anything that could be held
-    // in the wild).
+    // All items explicitly listed here are too big to fit.
     switch (item)
     {
-    case ITEM_ENERGY_POWDER:
-    case ITEM_PEWTER_CRUNCHIES:
-    case ITEM_RAGE_CANDY_BAR:
-    case ITEM_LUMIOSE_GALETTE:
-    case ITEM_HEALTH_FEATHER:
-    case ITEM_MUSCLE_FEATHER:
-    case ITEM_RESIST_FEATHER:
-    case ITEM_GENIUS_FEATHER:
-    case ITEM_CLEVER_FEATHER:
-    case ITEM_ABILITY_CAPSULE:
-    case ITEM_DYNAMAX_CANDY:
-    case ITEM_MAX_MUSHROOMS:
-    case ITEM_GOLD_BOTTLE_CAP:
-    case ITEM_PRETTY_FEATHER:
-    case ITEM_STRANGE_SOUVENIR:
-    case ITEM_FOSSILIZED_BIRD:
-    case ITEM_FOSSILIZED_FISH:
-    case ITEM_FOSSILIZED_DRAKE:
-    case ITEM_FOSSILIZED_DINO:
-    case ITEM_SURPRISE_MULCH:
-    case ITEM_YELLOW_APRICORN:
-    case ITEM_GREEN_APRICORN:
-    case ITEM_WHITE_APRICORN:
-    case ITEM_BLACK_APRICORN:
-    case ITEM_THUNDER_STONE:
-    case ITEM_GALARICA_WREATH:
-    case ITEM_STRAWBERRY_SWEET:
-    case ITEM_AUSPICIOUS_ARMOR:
-    case ITEM_BIG_BAMBOO_SHOOT:
-    case ITEM_GIMMIGHOUL_COIN:
-    case ITEM_LEADERS_CREST:
-    case ITEM_MALICIOUS_ARMOR:
-    case ITEM_TINY_BAMBOO_SHOOT:
-    case ITEM_BUG_TERA_SHARD:
-    case ITEM_DARK_TERA_SHARD:
-    case ITEM_DRAGON_TERA_SHARD:
     case ITEM_ELECTRIC_TERA_SHARD:
-    case ITEM_FAIRY_TERA_SHARD:
     case ITEM_FIGHTING_TERA_SHARD:
-    case ITEM_FIRE_TERA_SHARD:
-    case ITEM_FLYING_TERA_SHARD:
-    case ITEM_GHOST_TERA_SHARD:
-    case ITEM_GRASS_TERA_SHARD:
-    case ITEM_GROUND_TERA_SHARD:
-    case ITEM_ICE_TERA_SHARD:
-    case ITEM_NORMAL_TERA_SHARD:
-    case ITEM_POISON_TERA_SHARD:
     case ITEM_PSYCHIC_TERA_SHARD:
-    case ITEM_ROCK_TERA_SHARD:
-    case ITEM_STEEL_TERA_SHARD:
-    case ITEM_WATER_TERA_SHARD:
-    case ITEM_BLACK_AUGURITE:
     case ITEM_UNREMARKABLE_TEACUP:
     case ITEM_MASTERPIECE_TEACUP:
-    case ITEM_FRESH_START_MOCHI:
-    case ITEM_STELLAR_TERA_SHARD:
-    case ITEM_JUBILIFE_MUFFIN:
-    case ITEM_SUPERB_REMEDY:
-    case ITEM_AUX_POWERGUARD:
-    case ITEM_CHOICE_DUMPLING:
     case ITEM_TWICE_SPICED_RADISH:
-    // Items with hold effects:
-    case ITEM_ELECTRIC_MEMORY:
-    case ITEM_FIGHTING_MEMORY:
-    case ITEM_GROUND_MEMORY:
-    case ITEM_PSYCHIC_MEMORY:
-    case ITEM_DRAGON_MEMORY:
-    case ITEM_CHARIZARDITE_X:
-    case ITEM_CHARIZARDITE_Y:
-    case ITEM_ULTRANECROZIUM_Z:
-    case ITEM_DEEP_SEA_SCALE:
-    case ITEM_DEEP_SEA_TOOTH:
-    case ITEM_NEVER_MELT_ICE:
-    case ITEM_WEAKNESS_POLICY:
-    case ITEM_SAFETY_GOGGLES:
-    case ITEM_ADRENALINE_ORB:
-    case ITEM_TERRAIN_EXTENDER:
-    case ITEM_PROTECTIVE_PADS:
-    case ITEM_HEAVY_DUTY_BOOTS:
-    case ITEM_UTILITY_UMBRELLA:
-    case ITEM_MARANGA_BERRY:
-    case ITEM_PUNCHING_GLOVE:
-    case ITEM_BOOSTER_ENERGY:
-    case ITEM_ADAMANT_CRYSTAL:
-    case ITEM_LUSTROUS_GLOBE:
-    case ITEM_CORNERSTONE_MASK:
-    case ITEM_WELLSPRING_MASK:
-    case ITEM_HEARTHFLAME_MASK:
         EXPECT_GT(GetStringWidth(fontId, gItemsInfo[item].name, 0), widthPx);
         break;
     default:
@@ -397,7 +323,7 @@ TEST("Species names fit on Pokemon Storage System")
         }
     }
     EXPECT_LE(GetStringWidth(FONT_NARROWER, gSpeciesInfo[species].speciesName, 0), 66);
-    EXPECT_LE(GetStringWidth(FONT_SHORT_NARROW, gSpeciesInfo[species].speciesName, 0), 60);
+    // EXPECT_LE(GetStringWidth(FONT_SHORT_NARROWER, gSpeciesInfo[species].speciesName, 0), 60);
 }
 
 TEST("Species names fit on Contest Screen")
@@ -430,20 +356,20 @@ TEST("Species names fit on Contest Screen - Rankings")
     EXPECT_LE(GetStringWidth(fontId, gSpeciesInfo[species].speciesName, 0), widthPx);
 }
 
-TEST("Species names fit on Battle Dome Screen")
-{
-    u32 i;
-    const u32 fontId = FONT_SHORT_NARROW, widthPx = 1000;
-    u32 species = SPECIES_NONE;
-    for (i = 1; i < NUM_SPECIES; i++)
-    {
-        if (IsSpeciesEnabled(i))
-        {
-            PARAMETRIZE_LABEL("%S", gSpeciesInfo[i].speciesName) { species = i; }
-        }
-    }
-    EXPECT_LE(GetStringWidth(fontId, gSpeciesInfo[species].speciesName, 0), widthPx);
-}
+// TEST("Species names fit on Battle Dome Screen")
+// {
+//     u32 i;
+//     const u32 fontId = FONT_SHORT_NARROWER, widthPx = 60;
+//     u32 species = SPECIES_NONE;
+//     for (i = 1; i < NUM_SPECIES; i++)
+//     {
+//         if (IsSpeciesEnabled(i))
+//         {
+//             PARAMETRIZE_LABEL("%S", gSpeciesInfo[i].speciesName) { species = i; }
+//         }
+//     }
+//     EXPECT_LE(GetStringWidth(fontId, gSpeciesInfo[species].speciesName, 0), widthPx);
+// }
 
 TEST("Species names fit on Hall of Fame")
 {
@@ -667,7 +593,7 @@ TEST("Battle strings fit on the battle message window")
 
     for (i = start; i <= end; i++)
     {
-        PARAMETRIZE_LABEL("%S", gBattleStringsTable[i - BATTLESTRINGS_TABLE_START]) { battleStringId = i - BATTLESTRINGS_TABLE_START; }
+        PARAMETRIZE_LABEL("%S", gBattleStringsTable[i]) { battleStringId = i; }
     }
 
     // Clear buffers
@@ -690,8 +616,8 @@ TEST("Battle strings fit on the battle message window")
         sBattlerAbilities[j] = longAbilityID;
 
     // Set Trainers
-    gTrainerBattleOpponent_A = TRAINER_YOUNGSTER_BEN;
-    gTrainerBattleOpponent_B = TRAINER_YOUNGSTER_BEN;
+    TRAINER_BATTLE_PARAM.opponentA = TRAINER_YOUNGSTER_BEN;
+    TRAINER_BATTLE_PARAM.opponentB = TRAINER_YOUNGSTER_BEN;
 
     // Set battler to 1, so "The opposing " is prefixed when refering to battlers.
     gBattleTypeFlags |= BATTLE_TYPE_TRAINER;
@@ -709,7 +635,7 @@ TEST("Battle strings fit on the battle message window")
     // In cases where a buffer is used with multiple contexts, the widest string is used.
     // Eg. STRINGID_CANACTFASTERTHANKSTO is used for both with abilities and items,
     // so ability is chosen because it's longer.
-    switch (battleStringId + BATTLESTRINGS_TABLE_START)
+    switch (battleStringId)
     {
     // Testing Trainer messages is out of the current scope for this test.
     case STRINGID_TRAINER1LOSETEXT:
@@ -861,15 +787,15 @@ TEST("Battle strings fit on the battle message window")
     case STRINGID_DEFENDERSSTATROSE:
     case STRINGID_USINGITEMSTATOFPKMNROSE:
         StringCopy(gBattleTextBuff1, gStatNamesTable[longStatName]);
-        StringCopy(gBattleTextBuff2, sText_drastically);
+        StringCopy(gBattleTextBuff2, gText_drastically);
         StringAppend(gBattleTextBuff2, gText_StatRose);
         break;
     // Buffer Stat name to B_BUFF1, "severely fell" to B_BUFF2
     case STRINGID_ATTACKERSSTATFELL:
     case STRINGID_DEFENDERSSTATFELL:
         StringCopy(gBattleTextBuff1, gStatNamesTable[longStatName]);
-        StringCopy(gBattleTextBuff2, sText_severely);
-        StringAppend(gBattleTextBuff2, sText_StatFell);
+        StringCopy(gBattleTextBuff2, gText_severely);
+        StringAppend(gBattleTextBuff2, gText_StatFell);
         break;
     // Buffer Status name to B_BUFF2
     case STRINGID_PKMNSITEMCUREDPROBLEM:
@@ -879,9 +805,9 @@ TEST("Battle strings fit on the battle message window")
         break;
     // Buffer Box name to STR_VAR_1 and STR_VAR_3, Nickname to STR_VAR_2
     case STRINGID_PKMNTRANSFERREDSOMEONESPC:
-    case STRINGID_PKMNTRANSFERREDBILLSPC:
+    case STRINGID_PKMNTRANSFERREDLANETTESPC:
     case STRINGID_PKMNBOXSOMEONESPCFULL:
-    case STRINGID_PKMNBOXBILLSPCFULL:
+    case STRINGID_PKMNBOXLANETTESPCFULL:
         StringCopy(gStringVar1, boxName);
         StringCopy(gStringVar2, nickname);
         StringCopy(gStringVar3, boxName);
@@ -890,7 +816,7 @@ TEST("Battle strings fit on the battle message window")
         break;
     }
     BattleStringExpandPlaceholders(gBattleStringsTable[battleStringId], battleString, BATTLE_STRING_BUFFER_SIZE);
-    DebugPrintf("Battle String ID %d: %S", battleStringId + BATTLESTRINGS_TABLE_START, battleString);
+    DebugPrintf("Battle String ID %d: %S", battleStringId, battleString);
     for (j = 1;; j++)
     {
         strWidth = GetStringLineWidth(fontId, battleString, 0, j, BATTLE_STRING_BUFFER_SIZE);

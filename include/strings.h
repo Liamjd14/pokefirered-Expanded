@@ -186,6 +186,8 @@ extern const u8 gText_Ghost[];
 
 // pokemon
 extern const u8 gText_DefendersStatRose[];
+extern const u8 gText_PkmnGettingPumped[];
+extern const u8 gText_PkmnShroudedInMist[];
 extern const u8 gBattleText_GetPumped[];
 extern const u8 gBattleText_MistShroud[];
 extern const u8 gText_BadEgg[];
@@ -213,8 +215,6 @@ extern const u8 gString_SlotMachineControls[];
 
 // battle_controller_safari
 extern const u8 gText_EmptyString3[];
-extern const u8 gText_SafariZoneMenu[];
-extern const u8 gText_WhatWillPlayerThrow[];
 
 // battle_controller_player
 extern const u8 gText_BattleSwitchWhich[];
@@ -226,18 +226,6 @@ extern const u8 gText_LinkStandby[];
 extern const u8 gText_BattleMenu[];
 extern const u8 gText_WhatWillPkmnDo[];
 extern const u8 gText_NewLine[];
-
-// battle_controller_oak_old_man
-extern const u8 gText_ForPetesSake[];
-extern const u8 gText_TheTrainerThat[];
-extern const u8 gText_TryBattling[];
-extern const u8 gText_InflictingDamageIsKey[];
-extern const u8 gText_LoweringStats[];
-extern const u8 gText_KeepAnEyeOnHP[];
-extern const u8 gText_OakNoRunningFromATrainer[];
-extern const u8 gText_WinEarnsPrizeMoney[];
-extern const u8 gText_HowDissapointing[];
-extern const u8 gText_WhatWillOldManDo[];
 
 // battle_controller_pokedude
 extern const u8 Pokedude_Text_SpeedierBattlerGoesFirst[];
@@ -1398,16 +1386,6 @@ extern const u8 gText_PkmnsNickname[];
 extern const u8 gText_RivalsName[];
 
 // pokemon_storage_system
-extern const u8 gText_WithdrawPokemon[];
-extern const u8 gText_WithdrawMonDescription[];
-extern const u8 gText_DepositPokemon[];
-extern const u8 gText_DepositMonDescription[];
-extern const u8 gText_MovePokemon[];
-extern const u8 gText_MoveMonDescription[];
-extern const u8 gText_MoveItems[];
-extern const u8 gText_MoveItemsDescription[];
-extern const u8 gText_SeeYa[];
-extern const u8 gText_SeeYaDescription[];
 extern const u8 gText_PartyFull[];
 extern const u8 gText_JustOnePkmn[];
 extern const u8 gText_Box[];
