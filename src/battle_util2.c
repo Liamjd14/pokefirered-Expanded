@@ -26,6 +26,7 @@ void AllocateBattleResources(void)
     }
 
     gBattleStruct = AllocZeroed(sizeof(*gBattleStruct));
+    gAiBattleData = AllocZeroed(sizeof(*gAiBattleData));
 
 #if B_FLAG_SKY_BATTLE
     gBattleStruct->isSkyBattle = FlagGet(B_FLAG_SKY_BATTLE);
@@ -61,13 +62,14 @@ void FreeBattleResources(void)
 
         for (i = 0; i < 4; i++)
         {
-            FREE_AND_SET_NULL(gPokedudeBattlerStates[i]);
+            TRY_FREE_AND_SET_NULL(gPokedudeBattlerStates[i]);
         }
     }
     gFieldStatuses = 0;
     if (gBattleResources != NULL)
     {
         FREE_AND_SET_NULL(gBattleStruct);
+        FREE_AND_SET_NULL(gAiBattleData);
 
         FREE_AND_SET_NULL(gBattleResources->secretBase);
         FREE_AND_SET_NULL(gBattleResources->battleScriptsStack);
@@ -125,12 +127,12 @@ void SwitchPartyOrderInGameMulti(u8 battler, u8 arg1)
     {
         s32 i;
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
-            gBattlePartyCurrentOrder[i] = *(0 * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders));
+            gBattlePartyCurrentOrder[i] = *(i + (u8 *)(gBattleStruct->battlerPartyOrders));
 
         SwitchPartyMonSlots(GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[battler]), GetPartyIdFromBattlePartyId(arg1));
 
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
-            *(0 * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
+            *(i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
     }
 }
 

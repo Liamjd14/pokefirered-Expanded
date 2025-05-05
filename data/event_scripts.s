@@ -1368,6 +1368,7 @@ Text_TestMsg::
 	.include "data/text/new_game_intro.inc"
 	.include "data/text/pokedude.inc"
 	.include "data/scripts/follower.inc"
+	.include "data/scripts/dexnav.inc"
 
 	.include "data/maps/Oceanview/scripts.inc"
 	.include "data/maps/Oceanview/text.inc"
