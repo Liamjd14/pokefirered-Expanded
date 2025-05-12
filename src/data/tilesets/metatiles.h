@@ -294,3 +294,9 @@ const u32 gMetatileAttributes_IndigoPlateauWinter[] = INCBIN_U32("data/tilesets/
 
 const u16 gMetatiles_Oceanview[] = INCBIN_U16("data/tilesets/secondary/oceanview/metatiles.bin");
 const u32 gMetatileAttributes_Oceanview[] = INCBIN_U32("data/tilesets/secondary/oceanview/metatile_attributes.bin");
+
+const u16 gMetatiles_PorytilesPrimaryTest[] = INCBIN_U16("data/tilesets/primary/porytiles_primary_test/metatiles.bin");
+const u32 gMetatileAttributes_PorytilesPrimaryTest[] = INCBIN_U32("data/tilesets/primary/porytiles_primary_test/metatile_attributes.bin");
+
+const u16 gMetatiles_PorytilesSecondaryTest[] = INCBIN_U16("data/tilesets/secondary/porytiles_secondary_test/metatiles.bin");
+const u32 gMetatileAttributes_PorytilesSecondaryTest[] = INCBIN_U32("data/tilesets/secondary/porytiles_secondary_test/metatile_attributes.bin");

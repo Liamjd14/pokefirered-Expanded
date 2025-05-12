@@ -1378,3 +1378,6 @@ Text_TestMsg::
 
 	.include "data/maps/OceanviewWalk/scripts.inc"
 	.include "data/maps/OceanviewWalk/text.inc"
+
+	.include "data/maps/PorytilesTestMap/scripts.inc"
+	.include "data/maps/PorytilesTestMap/text.inc"
