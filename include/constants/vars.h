@@ -298,14 +298,14 @@
 #define VAR_0x40F5                 0x40F5
 #define VAR_0x40F6                 0x40F6
 #define VAR_0x40F7                 0x40F7
-#define VAR_0x40F8                 0x40F8
-#define VAR_0x40F9                 0x40F9
-#define VAR_0x40FA                 0x40FA
-#define VAR_0x40FB                 0x40FB
-#define VAR_0x40FC                 0x40FC
-#define VAR_0x40FD                 0x40FD
-#define VAR_0x40FE                 0x40FE
-#define VAR_0x40FF                 0x40FF
+#define VAR_DN_SPECIES                0x40F8
+#define VAR_DN_STEP_COUNTER                 0x40F9
+#define VAR_B_LEVEL_CAP_VARIABLE                 0x40FA
+#define VAR_B_NO_BAG_USE                 0x40FB
+#define VAR_B_DIFFICULTY                 0x40FC
+#define VAR_B_WILD_AI_FLAGS                 0x40FD
+#define VAR_B_STARTING_STATUS_TIMER                0x40FE
+#define VAR_B_STARTING_STATUS                 0x40FF
 
 #define VARS_END                   0x40FF
 #define VARS_COUNT                 (VARS_END - VARS_START + 1)
