@@ -955,7 +955,7 @@ static void BuyMenuDrawMapBg(void)
         for (i = 0; i < 5; i++)
         {
             metatile = MapGridGetMetatileIdAt(x + i, y + j);
-            metatileLayerType = MapGridGetMetatileLayerTypeAt(x + i, y + j);
+            metatileLayerType = METATILE_LAYER_TYPE_NORMAL;
 
             if (metatile < NUM_METATILES_IN_PRIMARY)
                 BuyMenuDrawMapMetatile(i, j, GetPrimaryTileset(mapLayout)->metatiles + metatile * NUM_TILES_PER_METATILE, metatileLayerType);
@@ -965,25 +965,45 @@ static void BuyMenuDrawMapBg(void)
     }
 }
 
+static bool8 IsMetatileLayerEmpty(const u16 *src)
+{
+    u32 i = 0;
+    for (i = 0; i < 4; ++i)
+    {
+        if ((src[i] & 0x3FF) != 0)
+            return FALSE;
+    }
+    return TRUE;
+}
+
 static void BuyMenuDrawMapMetatile(s16 x, s16 y, const u16 *src, u8 metatileLayerType)
 {
     u16 offset1 = x * 2;
     u16 offset2 = y * 64 + 64;
 
-    switch (metatileLayerType)
+    if (metatileLayerType == METATILE_LAYER_TYPE_NORMAL)
     {
-    case METATILE_LAYER_TYPE_NORMAL:
-        BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer4, offset1, offset2, src);
-        BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer2, offset1, offset2, src + 4);
-        break;
-    case METATILE_LAYER_TYPE_COVERED:
-        BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer3, offset1, offset2, src);
+        BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer3, offset1, offset2, src + 0);
         BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer4, offset1, offset2, src + 4);
-        break;
-    case METATILE_LAYER_TYPE_SPLIT:
-        BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer3, offset1, offset2, src);
-        BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer2, offset1, offset2, src + 4);
-        break;
+        BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer2, offset1, offset2, src + 8);
+    }
+    else
+    {
+        if (IsMetatileLayerEmpty(src))
+        {
+            BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer4, offset1, offset2, src);
+            BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer2, offset1, offset2, src + 4);
+        }
+        else if (IsMetatileLayerEmpty(src + 4))
+        {
+            BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer3, offset1, offset2, src);
+            BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer4, offset1, offset2, src + 4);
+        }
+        else if (IsMetatileLayerEmpty(src + 8))
+        {
+            BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer3, offset1, offset2, src);
+            BuyMenuDrawMapMetatileLayer(*gShopTilemapBuffer2, offset1, offset2, src + 4);
+        }
     }
 }
 
