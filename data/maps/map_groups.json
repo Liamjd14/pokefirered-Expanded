@@ -1,9 +1,14 @@
 {
   "group_order": [
+    "gMapGroup_EshosTownsandRoutes",
+    "gMapGroup_EshosUndergeound",
+    "gMapGroup_EshosWildAreas",
+    "gMapGroup_EshosDungeons",
+    "gMapGroup_DimentionalSpace",
+    "gMapGroup_TownsAndRoutes",
     "gMapGroup_Link",
     "gMapGroup_Dungeons",
     "gMapGroup_SpecialArea",
-    "gMapGroup_TownsAndRoutes",
     "gMapGroup_IndoorPallet",
     "gMapGroup_IndoorViridian",
     "gMapGroup_IndoorPewter",
@@ -554,5 +559,10 @@
   ],
   "gMapGroup_IndoorSevenIslandRoute": [
     "SevenIsland_SevaultCanyon_House"
-  ]
+  ],
+  "gMapGroup_EshosTownsandRoutes": [],
+  "gMapGroup_EshosUndergeound": [],
+  "gMapGroup_EshosWildAreas": [],
+  "gMapGroup_EshosDungeons": [],
+  "gMapGroup_DimentionalSpace": []
 }
