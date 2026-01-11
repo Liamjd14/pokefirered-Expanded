@@ -1369,3 +1369,12 @@ Text_TestMsg::
 	.include "data/text/pokedude.inc"
 	.include "data/scripts/follower.inc"
 	.include "data/scripts/dexnav.inc"
+
+	.include "data/maps/Oceanview/scripts.inc"
+	.include "data/maps/Oceanview/text.inc"
+
+	.include "data/maps/OceanviewWalkRoute1/scripts.inc"
+	.include "data/maps/OceanviewWalkRoute1/text.inc"
+
+	.include "data/maps/CoralhavenPassPT2/scripts.inc"
+	.include "data/maps/CoralhavenPassPT2/text.inc"
