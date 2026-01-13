@@ -1,7 +1,7 @@
 {
-  "id": "MAP_CORALHAVEN_PASS_PT2",
-  "name": "CoralhavenPassPT2",
-  "layout": "LAYOUT_CORALHAVEN_PASS_PT2",
+  "id": "MAP_SPIDER_ISLAND",
+  "name": "SpiderIsland",
+  "layout": "LAYOUT_SPIDER_ISLAND",
   "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_ABANDONED_SHIP",
   "requires_flash": false,
@@ -13,18 +13,7 @@
   "show_map_name": true,
   "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": [
-    {
-      "map": "MAP_OCEANVIEW",
-      "offset": 0,
-      "direction": "up"
-    },
-    {
-      "map": "MAP_OCEANVIEW_WALK_ROUTE1",
-      "offset": 32,
-      "direction": "up"
-    }
-  ],
+  "connections": null,
   "object_events": [],
   "warp_events": [],
   "coord_events": [],

@@ -167,6 +167,14 @@
       "y": 20,
       "respawn_map": "MAP_PEWTER_CITY",
       "respawn_npc": "1"
+    },
+    {
+      "id": "HEAL_LOCATION_CORALHAVEN_PASS_PT2",
+      "map": "MAP_CORALHAVEN_PASS_PT2",
+      "x": 32,
+      "y": 16,
+      "respawn_map": "MAP_CORALHAVEN_PASS_PT2",
+      "respawn_npc": "1"
     }
   ]
 }

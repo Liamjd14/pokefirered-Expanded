@@ -4416,6 +4416,18 @@
       "secondary_tileset": "gTileset_Oceanview",
       "border_filepath": "data/layouts/CoralhavenPassPT2/border.bin",
       "blockdata_filepath": "data/layouts/CoralhavenPassPT2/map.bin"
+    },
+    {
+      "id": "LAYOUT_SPIDER_ISLAND",
+      "name": "SpiderIsland_Layout",
+      "width": 32,
+      "height": 32,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Oceanview",
+      "border_filepath": "data/layouts/SpiderIsland/border.bin",
+      "blockdata_filepath": "data/layouts/SpiderIsland/map.bin"
     }
   ]
 }
