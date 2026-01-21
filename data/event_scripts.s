@@ -1381,3 +1381,6 @@ Text_TestMsg::
 
 	.include "data/maps/SpiderIsland/scripts.inc"
 	.include "data/maps/SpiderIsland/text.inc"
+
+	.include "data/maps/CoralhavenPassPt1/scripts.inc"
+	.include "data/maps/CoralhavenPassPt1/text.inc"
