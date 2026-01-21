@@ -2076,11 +2076,11 @@ static void DebugAction_FlagsVars_CatchingOnOff(u8 taskId)
 #define tItemId    data[5]
 #define tSpriteId  data[6]
 
-static void Debug_Display_ItemInfo(u32 itemId, u32 digit, u8 windowId)
+static void Debug_Display_ItemInfo(enum Item itemId, u32 digit, u8 windowId)
 {
     StringCopy(gStringVar2, gText_DigitIndicator[digit]);
     u8* end = CopyItemName(itemId, gStringVar1);
-    u16 moveId = ItemIdToBattleMoveId(itemId);
+    enum Move moveId = ItemIdToBattleMoveId(itemId);
     if (moveId != MOVE_NONE)
     {
         end = StringCopy(end, gText_Space2);
@@ -2089,7 +2089,7 @@ static void Debug_Display_ItemInfo(u32 itemId, u32 digit, u8 windowId)
     else if (CheckIfItemIsTMHMOrEvolutionStone(itemId) == 1)
     {
         end = StringCopy(end, COMPOUND_STRING(" None"));
-    } 
+    }
 
     WrapFontIdToFit(gStringVar1, end, DEBUG_MENU_FONT, WindowWidthPx(windowId));
     StringCopyPadded(gStringVar1, gStringVar1, CHAR_SPACE, 15);
@@ -2868,9 +2868,8 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
     }
 
     //Nature
-    if (nature == NUM_NATURES || nature == 0xFF)
-        nature = Random() % NUM_NATURES;
-    CreateMonWithNature(&mon, species, level, USE_RANDOM_IVS, nature);
+    u32 personality = GetMonPersonality(species, MON_GENDER_RANDOM, nature, RANDOM_UNOWN_LETTER);
+    CreateMon(&mon, species, level, personality, OTID_STRUCT_PLAYER_ID);
 
     //Shininess
     SetMonData(&mon, MON_DATA_IS_SHINY, &isShiny);
@@ -3125,14 +3124,11 @@ static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId)
 static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId) //Credit: Sierraffinity
 {
     int boxId, boxPosition;
-    u32 personality;
     struct BoxPokemon boxMon;
     u16 species = SPECIES_BULBASAUR;
     u8 speciesName[POKEMON_NAME_LENGTH + 1];
 
-    personality = Random32();
-
-    CreateBoxMon(&boxMon, species, 100, USE_RANDOM_IVS, FALSE, personality, OT_ID_PLAYER_ID, 0);
+    CreateBoxMon(&boxMon, species, 100, Random32(), OTID_STRUCT_PLAYER_ID);
 
     for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
     {
@@ -3170,7 +3166,7 @@ static void DebugAction_PCBag_Fill_PCBoxes_Slow(u8 taskId)
             {
                 if (!spaceAvailable)
                     PlayBGM(MUS_MYSTERY_GIFT);
-                CreateBoxMon(&boxMon, species, 100, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+                CreateBoxMon(&boxMon, species, 100, Random32(), OTID_STRUCT_PLAYER_ID);
                 gPokemonStoragePtr->boxes[boxId][boxPosition] = boxMon;
                 species = (species < NUM_SPECIES - 1) ? species + 1 : 1;
                 spaceAvailable = TRUE;

@@ -59,6 +59,7 @@
 #include "trade.h"
 #include "trainer_pokemon_sprites.h"
 #include "union_room.h"
+#include "pokerus.h"
 #include "constants/abilities.h"
 #include "constants/battle.h"
 #include "constants/easy_chat.h"
@@ -2002,7 +2003,7 @@ u8 GetMonAilment(struct Pokemon *mon)
     ailment = GetAilmentFromStatus(GetMonData(mon, MON_DATA_STATUS));
     if (ailment != AILMENT_NONE)
         return ailment;
-    if (CheckPartyPokerus(mon, 0))
+    if (ShouldPokemonShowActivePokerus(mon))
         return AILMENT_PKRS;
     return AILMENT_NONE;
 }
@@ -5374,7 +5375,7 @@ void ItemUseCB_PPUp(u8 taskId, TaskFunc func)
     gTasks[taskId].func = Task_HandleRestoreWhichMoveInput;
 }
 
-u16 ItemIdToBattleMoveId(u16 item)
+enum Move ItemIdToBattleMoveId(enum Item item)
 {
     return (GetItemPocket(item) == POCKET_TM_HM) ? GetItemTMHMMoveId(item) : MOVE_NONE;
 }
