@@ -1692,25 +1692,26 @@ static bool8 PicboxWait(void)
 
 void PicboxCancel(void)
 {
-    u8 taskId = FindTaskIdByFunc(Task_ScriptShowMonPic);
     struct Task *task;
-    if (taskId != TASK_NONE)
+    u8 taskId = FindTaskIdByFunc(Task_ScriptShowMonPic);
+
+    if (taskId == TASK_NONE)
+        return;
+
+    task = &gTasks[taskId];
+    switch (task->tState)
     {
-        task = &gTasks[taskId];
-        switch (task->tState)
-        {
-        case 0:
-        case 1:
-        case 2:
-            FreeResourcesAndDestroySprite(&gSprites[task->tSpriteId], task->tSpriteId);
-            DestroyScriptMenuWindow(task->tWindowId);
-            DestroyTask(taskId);
-            break;
-        case 3:
-            DestroyScriptMenuWindow(task->tWindowId);
-            DestroyTask(taskId);
-            break;
-        }
+    case 0:
+    case 1:
+    case 2:
+        FreeResourcesAndDestroySprite(&gSprites[task->tSpriteId], task->tSpriteId);
+        DestroyScriptMenuWindow(task->tWindowId);
+        DestroyTask(taskId);
+        break;
+    case 3:
+        DestroyScriptMenuWindow(task->tWindowId);
+        DestroyTask(taskId);
+        break;
     }
 }
 

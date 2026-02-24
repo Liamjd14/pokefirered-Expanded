@@ -1011,6 +1011,7 @@ void QL_HandleInput(void)
         // Pressed A, skip to next scene
         sPlaybackControl.endMode = END_MODE_SCENE;
         gQuestLogPlaybackState = QL_PLAYBACK_STATE_STOPPED;
+        DoPicboxCancel();
         DoSceneEndTransition(-3);
     }
     else if (JOY_NEW(B_BUTTON))
